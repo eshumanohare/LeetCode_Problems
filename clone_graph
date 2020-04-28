@@ -1,0 +1,20 @@
+import java.util.*;
+class Solution{ 
+public static Map<Node, Node> oldToNew = new HashMap<Node, Node>();
+
+public Node cloneGraph(Node node) {
+    if(node == null)
+        return node;
+    if (oldToNew.containsKey(node)) // If the node has been cloned, return the cloned node
+        return oldToNew.get(node);
+    Node cloneNode = new Node();
+    cloneNode.val = node.val;
+    oldToNew.put(node, cloneNode); // update the hash map
+
+    cloneNode.neighbors = new ArrayList<Node>();
+    for (int i = 0; i < node.neighbors.size(); i++) {
+        cloneNode.neighbors.add(cloneGraph(node.neighbors.get(i)));
+    }    
+    return cloneNode;
+}
+}
